@@ -1,4 +1,14 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>Server side search</title><link rel="stylesheet" type="text/css" href="bower_components/prism/prism-funky.css"><link rel="stylesheet" type="text/css" href="styles/main.css"></head><body><article><section><h1>Server side search</h1><h3>Michael Pope</h3></section><section><h2>Server Setup</h2><ul><li>Rails 3.2.x</li><li>Ransack</li></ul></section><section><h2>Client Setup</h2><ul><li>AngularJS 1.0.7</li><li>Angular-resource</li><li>Angular-ui-router</li><li>Jasmine + Karma          </li></ul></section><section><h2>Best Practices</h2><ul><li>My AngularJS Rails Example2</li><li>Second attempt at using AngularJS with Rails</li><li>Based on a few good tutorials I found</li><li>Coffeescript</li><li>Add testing</li><li>HTML5 pushstate</li></ul></section><section><h2>Ransack</h2><h3>Used for searching on the server</h3></section><section><h2>Filters</h2><h3>Only good for small data sets</h3></section><section><h2>AngualrJS search method</h2><hr><code class="language-coffeescript"><pre>$scope.search = -&gt;
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>Server side search</title><link rel="stylesheet" type="text/css" href="bower_components/prism/prism-funky.css"><link rel="stylesheet" type="text/css" href="styles/main.css"></head><body><article><section><h1>Server side search</h1><h3>Michael Pope</h3></section><section><h2>Server Setup</h2><ul><li>Rails 3.2.x</li><li>Ransack</li></ul></section><section><h2>Client Setup</h2><ul><li>AngularJS 1.0.7</li><li>Angular-resource</li><li>Angular-ui-router</li><li>Jasmine + Karma          </li></ul></section><section><h2>Angular Rails Best Practices</h2><ul><li>Coffeescript</li><li>Testing with Jasmine & Karma</li><li>HTML5 pushstate</li><li>Flash messages with timeout</li><li>ui.router with nested views</li><li>Searching</li></ul></section><section><h2>AngularJS Filters</h2><h3>Only good for small data sets</h3></section><section><h2>AngularJS ng-table</h2><li>Has AJAX Data Loading & Filtering</li><li>Requires jQuery</li><li>Looks promising</li></section><section><h2>Ransack</h2><li>Rails gem used for searching on the server</li><li>Search accross multiple tables</li><li>cont, lt, gt, eq, matches, in, start, end, true, present, null</li></section><section><h2>Search form</h2><hr><code class="language-markup"><pre>&lt;form&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;input ng-model=&quot;subject_cont&quot; /&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;input ng-model=&quot;body_cont&quot; /&gt;&lt;/td&gt;
+    &lt;td&gt;
+    &lt;input type=&quot;reset&quot; value=&quot;reset&quot; ng-click=&quot;reset()&quot; /&gt;
+    &lt;input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;submit&quot; ng-click=&quot;search()&quot; /&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/form&gt;
+</pre></code></section><section><h2>AngualrJS search method</h2><hr><code class="language-coffeescript"><pre>$scope.search = -&gt;
   searchService.setSubject($scope.subject_cont)
   searchService.setBody($scope.body_cont)
   
@@ -17,7 +27,7 @@
   end
 end
 
-</pre></code></section><section><h2>Remember Values</h2><hr><code class="language-coffeescript"><pre># Retain search variables whilst moving through the application
+</pre></code></section><section><h2>Remember values</h2><hr><code class="language-coffeescript"><pre># Retain search variables whilst moving through the application
 app.service('searchService', -&gt;
   subject = ''
   body = ''
@@ -27,4 +37,8 @@ app.service('searchService', -&gt;
   getBody : -&gt; return body
   setBody : (text) -&gt; body = text
 )
-</pre></code></section><section><h2>References</h2><ul><li><a href="http://mightygio.com/2013/03/integrating-rails-and-angularjs-part-1-structure/">Mightgio tutorial</a></li><li><a href="http://jacobmumm.com/2012/08/28/angular-js-services">Services & Factories explained</a></li></ul></section><section><h2>Questions</h2><ul><li>Michael Pope</li><li> <a href="https://github.com/map7/angularjs_rails_example2">My example 'angularjs_rails_example2'</a></li><li><a href="http://github.com/map7">My Github</a></li><li><a href="http://twitter.com/map7">My Twitter @map7</a></li><li><a href="http://map7.github.io/ngMelb_server_side_search_slides">These slides</a></li></ul></section></article><script src="bower_components/bespoke.js/dist/bespoke.min.js"></script><script src="bower_components/bespoke-bullets/dist/bespoke-bullets.min.js"></script><script src="bower_components/bespoke-hash/dist/bespoke-hash.min.js"></script><script src="bower_components/bespoke-state/dist/bespoke-state.min.js"></script><script src="bower_components/prism/prism.js"></script><script src="scripts/main.js"></script><script src="scripts/prism.ruby.js"></script><script src="scripts/prism-coffeescript.min.js"></script></body></html>
+</pre></code></section><section><h2>Load values</h2><hr><code class="language-coffeescript"><pre>if $state.current.name == 'letters'
+  $scope.subject_cont = searchService.getSubject()
+  $scope.body_cont = searchService.getBody()
+  $scope.search()
+  </pre></code></section><section><h2>References</h2><ul><li><a href="http://mightygio.com/2013/03/integrating-rails-and-angularjs-part-1-structure/">Mightygio tutorial</a></li><li><a href="http://jacobmumm.com/2012/08/28/angular-js-services">Services & Factories explained</a></li></ul></section><section><h2>Questions</h2><ul><li>Michael Pope</li><li> <a href="https://github.com/map7/angularjs_rails_best_practices">My example 'angularjs_rails_best_practices'</a></li><li><a href="http://github.com/map7">My Github</a></li><li><a href="http://twitter.com/map7">My Twitter @map7</a></li><li><a href="http://map7.github.io/ngMelb_server_side_search_slides">These slides</a></li></ul></section></article><script src="bower_components/bespoke.js/dist/bespoke.min.js"></script><script src="bower_components/bespoke-bullets/dist/bespoke-bullets.min.js"></script><script src="bower_components/bespoke-hash/dist/bespoke-hash.min.js"></script><script src="bower_components/bespoke-state/dist/bespoke-state.min.js"></script><script src="bower_components/prism/prism.js"></script><script src="scripts/main.js"></script><script src="scripts/prism.ruby.js"></script><script src="scripts/prism-coffeescript.min.js"></script></body></html>
